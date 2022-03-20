@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/core'
+// import { useNavigation } from '@react-navigation/core'
 import React from 'react'
 import { StyleSheet, Image, Text, TouchableOpacity, View , FlatList, SafeAreaView} from 'react-native'
 import { auth } from '../../firebase'
@@ -9,8 +9,8 @@ import { useState, useEffect } from "react";
 import COLORS from '../consts/colors';
 import { StatusBar } from 'expo-status-bar';
 
-const HomeScreen=()=>  {
-  const navigation = useNavigation()
+  const HomeScreen=({navigation})=>  {
+  //const navigation = useNavigation()
   //const [todo, setTodo] = useState("");
   const [value, setvalue] = useState([]);
   const  dbs = getDatabase();
@@ -120,7 +120,7 @@ const HomeScreen=()=>  {
   const handleSignOut = () => {
     signOut(auth).then(() => {
       // Sign-out successful.
-      navigation.replace("Login");
+      navigation.navigate("Login");
       console.log("Logout success");
     }).catch((error) => {
       // An error happened.
@@ -134,10 +134,8 @@ const HomeScreen=()=>  {
        const childData = childSnapshot.val();
        
      
-
         array.push(childData);
         console.log(array);
-
       });
    
   /*    const data = snapshot.val();
@@ -179,8 +177,23 @@ const HomeScreen=()=>  {
        data={value}     
        
        keyExtractor={(item) => item.key}
-       renderItem={renderItemupdated}
+    //   renderItem={renderItemupdated}
+    renderItem={({ item }) => {
+      // return <Text>{item.name}</Text>;
+
+        return(
+          <TouchableOpacity onPress={()=>navigation.navigate('Details',{key:item.key})}>
           
+          <Text>
+          {item.name}
+         </Text>
+         
+         
+         
+          </TouchableOpacity>
+          
+         )
+      }}
         
     />
      
@@ -230,6 +243,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
   },
+<<<<<<< HEAD
   image: {
     height: 420, 
     width: '100%',
@@ -237,3 +251,6 @@ const styles = StyleSheet.create({
   }
 })
 //https://www.freecodecamp.org/news/react-native-firebase-tutorial/
+=======
+})
+>>>>>>> 4b463bffbbdb7bd8c9969cbbac8428869cde6efd
