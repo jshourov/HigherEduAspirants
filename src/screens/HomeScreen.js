@@ -1,12 +1,13 @@
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View , FlatList} from 'react-native'
+import { StyleSheet, Image, Text, TouchableOpacity, View , FlatList, SafeAreaView} from 'react-native'
 import { auth } from '../../firebase'
 import {  signOut } from "firebase/auth";
 import { db } from '../../firebase';
 import {   getDatabase,ref, onValue ,set} from "firebase/database";
 import { useState, useEffect } from "react";
-
+import COLORS from '../consts/colors';
+import { StatusBar } from 'expo-status-bar';
 
 const HomeScreen=()=>  {
   const navigation = useNavigation()
@@ -169,7 +170,10 @@ const HomeScreen=()=>  {
     );
    
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={{flex:1, backgroundColor: COLORS.white}}>
+        <View style={styles.container}>
+        <StatusBar barStyle="light" hideTransitionAnimation='fade' />
+        <Image source={require('../image/image1.jpg')} style={styles.image}/>
        
         <FlatList
        data={value}     
@@ -186,10 +190,21 @@ const HomeScreen=()=>  {
       >
         <Text style={styles.buttonText}>Sign out</Text>
       </TouchableOpacity>
+      
+      </View>
     
-    </View>
+    </SafeAreaView>
     )
 }
+
+
+
+
+const STATUSBAR_HEIGHT = StatusBar.currentHeight;
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+
+
+
 export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
@@ -215,5 +230,10 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
   },
+  image: {
+    height: 420, 
+    width: '100%',
+    borderBottomLeftRadius: 125
+  }
 })
 //https://www.freecodecamp.org/news/react-native-firebase-tutorial/

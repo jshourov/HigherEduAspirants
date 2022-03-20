@@ -19,6 +19,7 @@ const Tabs = () => {
         
         screenOptions={({route}) => ({
             tabBarShowLabel: true,
+            headerShown: false,
             tabBarStyle: {
                 bottom: 34,
                 paddingVertical: 20,
